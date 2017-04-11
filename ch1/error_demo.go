@@ -23,6 +23,7 @@ func Stat(name string) (err error) {
 	err = syscall.Stat(name, &stat)
 	if err != nil {
 		err = PathError{"stat", name, err}
+		return
 	}
 	return
 }
