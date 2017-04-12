@@ -34,7 +34,8 @@ func (h Human) Sing(lyrics string) {
 	fmt.Println("La la la la...", lyrics)
 }
 
-// fmt.Println中定义了String()函数，如果Human也定义了String函数，那么调用fmt.Println的时候将会使用Human.String()函数进行打印
+// fmt.Println中定义了String()函数，如果Human也定义了String函数，
+// 那么调用fmt.Println的时候将会使用Human.String()函数进行打印
 func (h Human) String() string {
 	return "《" + h.Name + " - " + strconv.Itoa(h.Age) + " years -  ✆ " + h.Phone + "》"
 }
