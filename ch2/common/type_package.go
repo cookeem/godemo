@@ -15,3 +15,4 @@ func (i *Integer) Add2(j *Integer) (ret Integer) {
 	ret = *i + *j
 	return
 }
+
