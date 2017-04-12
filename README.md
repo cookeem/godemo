@@ -92,3 +92,13 @@ drwxr-xr-x  6 cookeem  staff  204  4 12 10:51 github.com
 drwxr-xr-x  3 cookeem  staff  102  4 12 10:51 golang.org
 drwxr-xr-x  5 cookeem  staff  170  4 12 10:51 gopkg.in
 ```
+
+* 运行go程序
+```sh
+godep go run gin/gin_demo.go
+```
+
+* 编译go程序
+```sh
+godep go build gin/gin_demo.go
+```
