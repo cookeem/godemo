@@ -23,9 +23,7 @@ ls -l Godeps/
 total 16
 -rw-r--r--  1 cookeem  staff  1361  4 12 10:57 Godeps.json
 -rw-r--r--  1 cookeem  staff   136  4 12 10:57 Readme
-```
 
-```sh
 cat Godeps/Godeps.json
 {
 	"ImportPath": "cookeem.com",
