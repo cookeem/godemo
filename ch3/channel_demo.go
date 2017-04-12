@@ -17,7 +17,7 @@ func main() {
 		go Count(chs[i], i)
 	}
 	for _, ch := range chs {
-		<- ch
+		<-ch
 	}
 
 	time.Sleep(1 * time.Second)
