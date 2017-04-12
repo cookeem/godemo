@@ -13,30 +13,36 @@ func main() {
 
 	tom.Work()
 
-	//定义Men类型的变量i
-	var i common.Men
+	//定义Man类型的变量man
+	var man common.Man
 
-	//i能存储Student
-	i = &mike
+	//men能存储Student
+	man = &mike
 	fmt.Println("This is Mike, a Student:")
-	i.SayHi()
-	i.Sing("November rain")
+	man.SayHi()
+	man.Sing("November rain")
 
-	//i也能存储Employee
-	i = &tom
+	//men也能存储Employee
+	man = &tom
 	fmt.Println("This is tom, an Employee:")
-	i.SayHi()
-	i.Sing("Born to be wild")
+	man.SayHi()
+	man.Sing("Born to be wild")
 
 	//定义了slice Men
 	fmt.Println("Let's use a slice of Men and see what happens")
-	x := make([]common.Men, 3)
+	men := make([]common.Man, 3)
 	//这三个都是不同类型的元素，但是他们实现了interface同一个接口
-	x[0], x[1], x[2] = &paul, &sam, &mike
+	men[0], men[1], men[2] = &paul, &sam, &mike
 
-	for _, value := range x {
+	for _, value := range men {
 		value.SayHi()
 	}
 
-	fmt.Println("mike format println:", mike)
+	//接口的类型查询
+	//man.(common.Employee)会失败，因为Employee有自己的SayHi方法
+	if man2, ok := man.(common.Student); ok {
+		fmt.Printf("%v is a Student\n", man2)
+	} else {
+		fmt.Printf("%v is not a Student\n", man)
+	}
 }
