@@ -9,7 +9,7 @@ func main() {
 	//if条件语句
 	args := os.Args
 
-	if i, argsSize := 1, len(args); argsSize - i == 0 {
+	if i, argsSize := 1, len(args); argsSize-i == 0 {
 		fmt.Println("no args")
 	} else if argsSize > 1 && argsSize < 3 {
 		fmt.Println("argsSize > 1 && argsSize < 3")
@@ -61,7 +61,7 @@ func main() {
 		i++
 	}
 
-	for i := 0;; {
+	for i := 0; ; {
 		if i > 5 {
 			break
 		}

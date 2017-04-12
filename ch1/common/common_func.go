@@ -17,10 +17,10 @@ func Add(x, y int) (ret int, err error) {
 }
 
 //不定参数函数
-func Sum(args ...int) (ret int, err error){
+func Sum(args ...int) (ret int, err error) {
 	okParams := true
 	for _, arg := range args {
-		if (arg < 1) {
+		if arg < 1 {
 			okParams = false
 			break
 		}
@@ -37,7 +37,7 @@ func Sum(args ...int) (ret int, err error){
 }
 
 //任意类型的不定参数函数
-func Join(args ...interface{}) (ret string){
+func Join(args ...interface{}) (ret string) {
 	for _, arg := range args {
 		switch arg.(type) {
 		case rune:
@@ -64,4 +64,3 @@ func Join(args ...interface{}) (ret string){
 }
 
 const Pi = 3.14
-

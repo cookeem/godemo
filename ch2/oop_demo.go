@@ -8,7 +8,7 @@ import (
 
 func main() {
 	//类的继承
-	jokeFish := common.Fish{"jokeFish", 5}
+	jokeFish := common.Fish{TypeName: "jokeFish", Age: 5}
 	jokeFish.Swimming()
 
 	sharkFish := common.Shark{}

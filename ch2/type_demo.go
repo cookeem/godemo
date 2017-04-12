@@ -2,17 +2,17 @@ package main
 
 import (
 	"cookeem.com/ch2/common"
-	"fmt"
 	"errors"
+	"fmt"
 )
 
 type Rect struct {
-	x, y int
+	x, y          int
 	width, height int
 }
 
 //不变更对象
-func (rect Rect) Area()(area int, err error) {
+func (rect Rect) Area() (area int, err error) {
 	if rect.width < 1 || rect.height < 1 {
 		err = errors.New("height or width must greater than 0")
 		return
@@ -22,7 +22,7 @@ func (rect Rect) Area()(area int, err error) {
 }
 
 //需要改变对象
-func (rect *Rect) MoveToCenter()(err error) {
+func (rect *Rect) MoveToCenter() (err error) {
 	if rect.width < 1 || rect.height < 1 {
 		err = errors.New("height or width must greater than 0")
 		return
@@ -33,7 +33,7 @@ func (rect *Rect) MoveToCenter()(err error) {
 	}
 }
 
-func (rect1 Rect) CompareArea(rect2 *Rect)(ret string, err error) {
+func (rect1 Rect) CompareArea(rect2 *Rect) (ret string, err error) {
 	if rect1.width < 1 || rect1.height < 1 {
 		err = errors.New("rect1 height or width must greater than 0")
 		return
@@ -54,7 +54,7 @@ func (rect1 Rect) CompareArea(rect2 *Rect)(ret string, err error) {
 	return
 }
 
-func NewRect(x, y, width, height int)(rect Rect) {
+func NewRect(x, y, width, height int) (rect Rect) {
 	rect.x = x
 	rect.y = y
 	rect.height = height
@@ -62,13 +62,13 @@ func NewRect(x, y, width, height int)(rect Rect) {
 	return rect
 }
 
-func NewRect2(x, y, width, height int)(*Rect) {
+func NewRect2(x, y, width, height int) *Rect {
 	return &Rect{x, y, width, height}
 }
 
 func main() {
-	i := common.Integer(1)
-	var j common.Integer = 2
+	i := common.Integer2(1)
+	var j common.Integer2 = 2
 	fmt.Println("i.Add(j):", i.Add(j))
 
 	//值和引用
@@ -82,7 +82,7 @@ func main() {
 	*b++
 	fmt.Println("a, *b:", a, *b)
 
-	arr1 := [3]int { 1, 1, 1}
+	arr1 := [3]int{1, 1, 1}
 	arr2 := &arr1
 	fmt.Println("arr1, *arr2:", arr1, *arr2)
 	//数组值类型的修改引用
@@ -90,7 +90,7 @@ func main() {
 	fmt.Println("arr1, *arr2:", arr1, *arr2)
 
 	//slice,map,chan本身就是引用类型
-	slice1 := []int { 0, 0, 0 }
+	slice1 := []int{0, 0, 0}
 	slice2 := slice1
 	fmt.Println("slice1, slice2:", slice1, slice2)
 	slice2[0] = 1

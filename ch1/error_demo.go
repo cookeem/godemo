@@ -1,17 +1,17 @@
 package main
 
 import (
-	"syscall"
 	"fmt"
-	"os"
 	"io"
+	"os"
+	"syscall"
 )
 
 //自定义错误
 type PathError struct {
-	Op string
+	Op   string
 	Path string
-	Err error
+	Err  error
 }
 
 func (e PathError) Error() string {
@@ -32,13 +32,13 @@ func Stat(name string) (err error) {
 func CopyFile(src, dst string) (w int64, err error) {
 	srcFile, err := os.Open(src)
 	if err != nil {
-		fmt.Println("os.Open(",src,") err:", err)
+		fmt.Println("os.Open(", src, ") err:", err)
 		return
 	}
 	defer srcFile.Close()
 	dstFile, err := os.Create(dst)
 	if err != nil {
-		fmt.Println("os.Create(",dst,") err:", err)
+		fmt.Println("os.Create(", dst, ") err:", err)
 		return
 	}
 	defer dstFile.Close()
@@ -50,7 +50,7 @@ func SimplePanicRecover() {
 	defer func() {
 		if err := recover(); err != nil {
 			e, ok := err.(error)
-			if (ok) {
+			if ok {
 				fmt.Println("e.Error() is:", e.Error())
 			}
 			fmt.Println("Panic info is: ", err)
