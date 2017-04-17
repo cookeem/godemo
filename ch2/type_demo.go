@@ -67,8 +67,8 @@ func NewRect2(x, y, width, height int) *Rect {
 }
 
 func main() {
-	i := common.Integer2(1)
-	var j common.Integer2 = 2
+	i := common.Integer(1)
+	var j common.Integer = 2
 	fmt.Println("i.Add(j):", i.Add(j))
 
 	//值和引用
@@ -134,5 +134,7 @@ func main() {
 	fmt.Println("*rect4:", *rect4)
 
 	rect5 := new(Rect)
-	fmt.Println("rect5:", rect5)
+	fmt.Printf("rect5: %#v\n", rect5)
+
+	fmt.Printf("str: %+q\n", "你好吗")
 }

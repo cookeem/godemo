@@ -146,4 +146,8 @@ func main() {
 	} else {
 		fmt.Println("ok:", ok)
 	}
+
+	s := fmt.Sprintf("map1: %v\nmap2: %v", map1, map2)
+	fmt.Println(s)
+
 }
