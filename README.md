@@ -116,8 +116,29 @@ go build gin/gin_demo.go
 GitLab与Jenkins集成
 ---
 
-* Jenkins必须安装以下插件：
+### Jenkins与GitLab互联：
 - Jenkins GitLab Plugin以及Jenkins Git Plugin
 - 在Jenkins的"系统管理" -》"系统设置" -》"Gitlab"中设置Connection name、Gitlab host URL、Credentials
 - 其中Credentials使用API Token，打开Gitlab的"User Settings" -》"Account" -》 "Private token"
 - 把Gitlab的"Private token"粘贴到Jenkins的Gitlab设置的Credentials，然后验证测试
+
+### Jenkins新建项目：
+- 新建"构建一个自由风格的软件项目"
+- "General" -》"	GitLab connection"，选择对应的gitlab（配置位于Jenkins的"系统管理" -》"系统设置" -》"Gitlab"）
+- "源码管理" -》 "Git" -》"Repository URL"：http://172.20.10.2/cookeem/godemo
+- "源码管理" -》 "Git" -》"Credentials"：选择对应的密钥（配置位于Jenkins的"系统管理" -》"系统设置" -》"Gitlab"）
+- "构建环境" -》 "Set up Go programming language tools" -》 "Go version"：选择对应的版本（配置位于Jenkins的"系统管理" -》"Global Tool Configuration" -》"Go"）
+- "构建" -》 "Execute shell"，内容为：
+```sh
+pwd
+echo "###################"
+printenv
+echo "###################"
+ls -al
+echo "###################"
+export GOPATH=`pwd`
+rm -rf src
+mv vendor src
+echo "###################"
+go build gin/gin_demo.go
+```
