@@ -8,17 +8,17 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/gin-gonic/gin/binding",
-			"Comment": "v1.0-2-g3900df0",
-			"Rev": "3900df04d2a88e22beaf6a2970c63648b9e1b0e1"
+			"Comment": "v1.1.4",
+			"Rev": "e2212d40c62a98b388a5eb48ecbdcf88534688ba"
 		},
 		{
 			"ImportPath": "github.com/gin-gonic/gin/render",
-			"Comment": "v1.0-2-g3900df0",
-			"Rev": "3900df04d2a88e22beaf6a2970c63648b9e1b0e1"
+			"Comment": "v1.1.4",
+			"Rev": "e2212d40c62a98b388a5eb48ecbdcf88534688ba"
 		},
 		{
 			"ImportPath": "github.com/golang/protobuf/proto",
-			"Rev": "98fa357170587e470c5f27d3c3ea0947b71eb455"
+			"Rev": "2bba0603135d7d7f5cb73b2125beeda19c09f4ef"
 		},
 		{
 			"ImportPath": "github.com/manucorporat/sse",
@@ -31,7 +31,7 @@
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",
-			"Rev": "8b4af36cd21a1f85a7484b49feb7c79363106d8e"
+			"Rev": "d1e1b351919c6738fdeb9893d5c998b161464f0c"
 		},
 		{
 			"ImportPath": "golang.org/x/sys/unix",
@@ -49,7 +49,7 @@
 		},
 		{
 			"ImportPath": "gopkg.in/yaml.v2",
-			"Rev": "a5b47d31c556af34a302ce5d659e6fea44d90de0"
+			"Rev": "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b"
 		}
 	]
 }
