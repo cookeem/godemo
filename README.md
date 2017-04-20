@@ -104,4 +104,10 @@ godep go build gin/gin_demo.go
 
 在Linux的Jenkins下进行godep编译
 ---
-* 在jenkins下，需要把vendor目录修改为src目录
+* 在jenkins下，需要把vendor目录修改为src目录，在jenkins下执行以下构建命令：
+```sh
+export GOPATH=`pwd`
+rm -rf src
+mv vendor src
+./godep go build gin/gin_demo.go
+```
