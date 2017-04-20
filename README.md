@@ -109,5 +109,5 @@ godep go build gin/gin_demo.go
 export GOPATH=`pwd`
 rm -rf src
 mv vendor src
-./godep go build gin/gin_demo.go
+go build gin/gin_demo.go
 ```
