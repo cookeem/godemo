@@ -111,3 +111,13 @@ rm -rf src
 mv vendor src
 go build gin/gin_demo.go
 ```
+
+
+GitLab与Jenkins集成
+---
+
+* Jenkins必须安装以下插件：
+- Jenkins GitLab Plugin以及Jenkins Git Plugin
+- 在Jenkins的"系统管理" -》"系统设置" -》"Gitlab"中设置Connection name、Gitlab host URL、Credentials
+- 其中Credentials使用API Token，打开Gitlab的"User Settings" -》"Account" -》 "Private token"
+- 把Gitlab的"Private token"粘贴到Jenkins的Gitlab设置的Credentials，然后验证测试
