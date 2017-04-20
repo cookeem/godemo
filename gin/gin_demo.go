@@ -8,6 +8,10 @@ import (
 func main() {
 	router := gin.Default()
 
+	router.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "Usage: /user/name or /user/name/action")
+	})
+
 	// This handler will match /user/john but will not match neither /user/ or /user
 	router.GET("/user/:name", func(c *gin.Context) {
 		name := c.Param("name")
@@ -23,5 +27,5 @@ func main() {
 		c.String(http.StatusOK, message)
 	})
 
-	router.Run(":8080")
+	router.Run(":8081")
 }

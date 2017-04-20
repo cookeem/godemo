@@ -34,7 +34,7 @@ func main() {
 	}
 	//检测channel是否已经关闭，否则循环读取，使用结果与上边的方式一致
 	for {
-		msg, ok := <- varChan2
+		msg, ok := <-varChan2
 		if ok {
 			fmt.Println("Got msg: ", msg)
 		} else {

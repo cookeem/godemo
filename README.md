@@ -100,3 +100,8 @@ godep go run gin/gin_demo.go
 ```sh
 godep go build gin/gin_demo.go
 ```
+
+
+在Linux的Jenkins下进行godep编译
+---
+* 在jenkins下，需要把vendor目录修改为src目录
