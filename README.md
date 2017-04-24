@@ -125,7 +125,7 @@ GitLab与Jenkins集成
 ### Jenkins新建项目：
 - 新建"构建一个自由风格的软件项目"
 - "General" -》"	GitLab connection"，选择对应的gitlab（配置位于Jenkins的"系统管理" -》"系统设置" -》"Gitlab"）
-- "源码管理" -》 "Git" -》"Repository URL"：http://172.20.10.2/cookeem/godemo
+- "源码管理" -》 "Git" -》"Repository URL"：http://gitlab/cookeem/godemo
 - "源码管理" -》 "Git" -》"Credentials"：选择对应的密钥（配置位于Jenkins的"系统管理" -》"系统设置" -》"Gitlab"）
 - "构建环境" -》 "Set up Go programming language tools" -》 "Go version"：选择对应的版本（配置位于Jenkins的"系统管理" -》"Global Tool Configuration" -》"Go"）
 - "构建" -》 "Execute shell"，内容为：
