@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"strings"
 	"time"
+	"os"
 )
 
 func parseAbsUrl(strRootURL, strRelaURL string) (link string, err error) {
@@ -30,7 +31,7 @@ func parseAbsUrl(strRootURL, strRelaURL string) (link string, err error) {
 	return link, err
 }
 
-func parseListPage(strURL string) (links []string) {
+func parseListPage(strURL string, logFile *log.Logger) (links []string) {
 	//strURL := "http://git.oschina.net/cookeem/CookIM/stargazers"
 	doc, err := goquery.NewDocument(strURL)
 	if err != nil {
@@ -47,12 +48,12 @@ func parseListPage(strURL string) (links []string) {
 		if link != "" {
 			links = append(links, link)
 		}
-		fmt.Printf("Name %d: %s, %v, %v\n", i, name, avatar, link)
+		logFile.Printf("Name %d: %s, %v, %v\n", i, name, avatar, link)
 	})
 	return links
 }
 
-func parseContentPage(strURL string) {
+func parseContentPage(strURL string, logFile *log.Logger) {
 	//strURL := "http://git.oschina.net/fulus"
 	doc, err := goquery.NewDocument(strURL)
 	if err != nil {
@@ -63,24 +64,34 @@ func parseContentPage(strURL string) {
 	name = strings.Replace(name, "\n", " ", -1)
 	numText := doc.Find("div[class='git-user-infodata'] > div[class='ui grid'] > div.four").Text()
 	numText = strings.Replace(numText, "\n", " ", -1)
-	fmt.Println("## Name:", name, "## Tags:", numText)
-	fmt.Println("## Link:", strURL, time.Now())
+	logFile.Println("## Name:", name, "## Tags:", numText)
+	logFile.Println("## Link:", strURL, time.Now())
 }
 
 func main() {
-	strURL := "http://git.oschina.net/cookeem/CookIM/stargazers?page=4"
-	links := parseListPage(strURL)
-	fmt.Println("##########################")
-	fmt.Println("##########################")
+	strURL := "http://git.oschina.net/cookeem/CookIM/stargazers?page=1"
 
+	fileName := "goquery.log"
+	file, err := os.Create(fileName)
+	if err != nil {
+		log.SetPrefix("[ERROR]")
+		log.Println(err)
+		return
+	}
+	defer file.Close()
+	logFile := log.New(file, "[DEBUG]", log.LstdFlags)
+
+	links := parseListPage(strURL, logFile)
+	logFile.Println("##########################")
+	logFile.Println("##########################")
 	//jobs为带缓冲channel
-	jobs := make(chan string, 10)
-	numOfWorkers := 10
-	for w := 1; w <= numOfWorkers; w++ {
+	jobs := make(chan string, 5)
+	numOfWorkers := 100
+	for i := 1; i <= numOfWorkers; i++ {
 		//启动numOfWorkers个goroutine
 		go func() {
 			for link := range jobs {
-				parseContentPage(link)
+				parseContentPage(link, logFile)
 			}
 		}()
 	}
@@ -92,4 +103,6 @@ func main() {
 
 	//在jobs写入的程序段进行channel关闭
 	close(jobs)
+	logFile.SetPrefix("[INFO]")
+	logFile.Println("count:", len(links))
 }
