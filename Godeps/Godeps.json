@@ -7,6 +7,15 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/PuerkitoBio/goquery",
+			"Comment": "v1.0.1-2-g152b1a2",
+			"Rev": "152b1a2c8f5d0340f658bb656032a39b94e52958"
+		},
+		{
+			"ImportPath": "github.com/andybalholm/cascadia",
+			"Rev": "65919c611220063037b1db8eb334acaf17a6d8ea"
+		},
+		{
 			"ImportPath": "github.com/gin-gonic/gin/binding",
 			"Comment": "v1.1.4",
 			"Rev": "e2212d40c62a98b388a5eb48ecbdcf88534688ba"
@@ -31,6 +40,14 @@
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",
+			"Rev": "d1e1b351919c6738fdeb9893d5c998b161464f0c"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "d1e1b351919c6738fdeb9893d5c998b161464f0c"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html/atom",
 			"Rev": "d1e1b351919c6738fdeb9893d5c998b161464f0c"
 		},
 		{

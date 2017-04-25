@@ -10,6 +10,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"time"
 )
 
 func ReadFrom(reader io.Reader, num int) ([]byte, error) {
@@ -187,5 +188,35 @@ func main() {
 	for _, fi := range fis {
 		fmt.Println(fi.Name(), fi.IsDir(), fi.Size(), fi.ModTime())
 	}
+
+	fmt.Println("##Scanner统计词频")
+	const input = "This is The Golang Standard Library.\nWelcome you!"
+	scanner := bufio.NewScanner(strings.NewReader(input))
+	scanner.Split(bufio.ScanWords)
+	count := 0
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
+		count++
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Fprintln(os.Stderr, "reading input:", err)
+	}
+	fmt.Println(count)
+
+	fmt.Println("##NewScanner从标准输入中获取数据")
+	scanner = bufio.NewScanner(strings.NewReader("hello\nworld\nhaijian\n"))
+	for scanner.Scan() {
+		fmt.Println(scanner.Text()) // Println will add back the final '\n'
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Fprintln(os.Stderr, "reading standard input:", err)
+	}
+
+	now := time.Now()
+	year, month, day := now.Date()
+	hour, minute, second := now.Clock()
+	fmt.Println(year, int(month), day, hour, minute, second)
+	t2 := time.Date(2010, 10, 20, 12, 24, 36, 512, time.Local)
+	fmt.Println(t2)
 
 }
