@@ -85,7 +85,7 @@ func main() {
 
 	links := parseListPage(strURL, logFile, logStdout)
 
-	//jobs为带缓冲channel，缓冲大小必须等于job数量，否则jobs channel会一直等待
+	//jobs为带缓冲channel
 	numOfJobs := len(links)
 	numOfWorkers := 5
 	jobs := make(chan string, numOfJobs)
