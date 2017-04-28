@@ -7,6 +7,7 @@ import (
 
 func main() {
 	router := gin.Default()
+
 	router.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Usage: /user/name or /user/name/action")
 	})
