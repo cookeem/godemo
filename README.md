@@ -122,9 +122,14 @@ GitLab与Jenkins集成
 - 其中Credentials使用API Token，打开Gitlab的"User Settings" -》"Account" -》 "Private token"
 - 把Gitlab的"Private token"粘贴到Jenkins的Gitlab设置的Credentials，然后验证测试
 
-### Jenkins新建项目：
+### Jenkins新建项目，实现gitlab push自动构建：
 - 新建"构建一个自由风格的软件项目"
 - "General" -》"	GitLab connection"，选择对应的gitlab（配置位于Jenkins的"系统管理" -》"系统设置" -》"Gitlab"）
+- "构建触发器" -》"Build when a change is pushed to GitLab. GitLab CI Service URL: http://localhost:8080/project/godemo_gitlab" -》"高级" -》"Secret token" -》"Generate"
+- 打开GitLab，选择godemo项目 -》设置 -》Integrations
+URL输入：http://jenkins:8080/project/godemo_gitlab
+Secret Token：对应Jenkins中自动生成的"Secret token"
+Enable SSL verification：必须取消
 - "源码管理" -》 "Git" -》"Repository URL"：http://gitlab/cookeem/godemo
 - "源码管理" -》 "Git" -》"Credentials"：选择对应的密钥（配置位于Jenkins的"系统管理" -》"系统设置" -》"Gitlab"）
 - "构建环境" -》 "Set up Go programming language tools" -》 "Go version"：选择对应的版本（配置位于Jenkins的"系统管理" -》"Global Tool Configuration" -》"Go"）
