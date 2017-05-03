@@ -102,17 +102,6 @@ godep go build gin/gin_demo.go
 ```
 
 
-在Linux的Jenkins下进行godep编译
----
-* 在jenkins下，需要把vendor目录修改为src目录，在jenkins下执行以下构建命令：
-```sh
-export GOPATH=`pwd`
-rm -rf src
-mv vendor src
-go build gin/gin_demo.go
-```
-
-
 GitLab与Jenkins集成
 ---
 
@@ -134,6 +123,7 @@ Enable SSL verification：必须取消
 - "源码管理" -》 "Git" -》"Credentials"：选择对应的密钥（配置位于Jenkins的"系统管理" -》"系统设置" -》"Gitlab"）
 - "构建环境" -》 "Set up Go programming language tools" -》 "Go version"：选择对应的版本（配置位于Jenkins的"系统管理" -》"Global Tool Configuration" -》"Go"）
 - "构建" -》 "Execute shell"，内容为：
+
 ```sh
 pwd
 echo "###################"
