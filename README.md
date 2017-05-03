@@ -119,7 +119,7 @@ GitLab与Jenkins集成
 ### Jenkins与GitLab互联：
 - Jenkins GitLab Plugin、Jenkins Git Plugin、Gitlab Hook Plugin（用于gitlab的push触发自动构建）
 - 在Jenkins的"系统管理" -》"系统设置" -》"Gitlab"中设置Connection name、Gitlab host URL、Credentials
-- 其中Credentials使用API Token，打开Gitlab的"User Settings" -》"Account" -》 "Private token"
+- 其中Credentials使用Gitlab API Token，打开Gitlab的"User Settings" -》"Account" -》 "Private token"
 - 把Gitlab的"Private token"粘贴到Jenkins的Gitlab设置的Credentials，然后验证测试
 
 ### Jenkins新建项目，实现gitlab push自动构建：
