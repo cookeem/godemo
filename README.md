@@ -110,8 +110,6 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
     
     > "Set up Go programming language tools" -> "Go version" 选择 go_1.8.1
     
-    > "Build inside a Docker container" -> "Docker installation" 选择 docker_1.13.1。如果还没有安装docker环境，选择此项用于在执行构建的时候安装docker client环境。docker client环境安装完成务必取消该项。
-
 - "构建"设置
     > "新增构建步骤" -> "Execute shell"，执行以下构建脚本
     ```
@@ -137,6 +135,7 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
        "Docker registry URL" 设置为 http://registry:5000/v2/
        "Registry credentials" 设置为 none
        "Force Pull" 取消选择
+       "Docker installation" 选择 docker_1.13.1，在构建的时候自动安装docker客户端
     ```
 
 - "保存"项目
