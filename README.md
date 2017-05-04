@@ -173,3 +173,8 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
         docker logs godemo
         exit
     ```
+
+- 关闭服务，注意，如果只是stop再up，docker容器启动会出现异常
+    ```
+        docker-compose stop && docker-compose rm -f
+    ```
