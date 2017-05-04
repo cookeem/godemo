@@ -136,7 +136,6 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
     > "新增构建步骤" -> "Docker Build and Publish"
     ```
        "Repository Name" 设置为 godemo
-       "Tag" 设置为 0.2.0
        "Docker Host URI" 设置为 tcp://docker:2375 （连接远程docker）
        "Server credentials" 设置为 none
        "Docker registry URL" 设置为 http://registry:5000/v2/
@@ -145,8 +144,30 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
        "Docker installation" 选择 docker_1.13.1，在构建的时候自动安装docker客户端
     ```
 
+    > "新增构建步骤" -> "Execute shell"，执行以下构建脚本
+    ```
+        /var/jenkins_home/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/docker_1.13.1/bin/docker -H tcp://docker:2375 stop godemo
+        /var/jenkins_home/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/docker_1.13.1/bin/docker -H tcp://docker:2375 rm godemo
+        /var/jenkins_home/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/docker_1.13.1/bin/docker -H tcp://docker:2375 run -d --name godemo -p 8081:8081 registry:5000/godemo:latest
+    ```
+
 - "保存"项目
 
 - GitLab中进行push，触发Jenkins进行GoLang项目构建，完成构建后，把编译包build成docker镜像，并且把镜像push到docker registry
 
 - 源码的根目录需要创建Dockerfile，用于"CloudBees Docker Build and Publish plugin"进行自动构建docker镜像
+
+- 在jenkins容器中测试godemo是否启动正常
+    ```
+        docker exec -ti jenkins bash
+        curl docker:8081/user/haijian/ok
+        haijian is /ok
+    ```
+
+- 在docker容器中测试godemo是否启动正常
+    ```
+        docker exec -ti docker ash
+        docker images
+        docker ps
+        docker logs godemo
+    ```
