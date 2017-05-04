@@ -3,9 +3,16 @@ package main
 import (
 	"gopkg.in/gin-gonic/gin.v1"
 	"net/http"
+	"fmt"
 )
 
+// 定义应用版本
+// go build -ldflags "-X main.VersionName=`cat VERSION`" gin/gin_demo.go
+var VersionName = "No Version Provided"
+
 func main() {
+	fmt.Println("App Version is:", VersionName)
+
 	router := gin.Default()
 
 	router.GET("/", func(c *gin.Context) {

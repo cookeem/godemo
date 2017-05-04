@@ -12,7 +12,7 @@ MAINTAINER cookeem cookeem@qq.com
 
 COPY gin_demo /gin_demo
 
-# 解决alpine无法运行golang的binary问题
+# 解决alpine无法运行golang的binary问题，缺少x86_64
 RUN mkdir /lib64
 RUN ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 

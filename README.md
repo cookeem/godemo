@@ -41,9 +41,11 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
 ### Jenkins安装相关插件（"系统管理" -> "管理插件"）
 
 - CloudBees Docker Build and Publish plugin
-    > docker插件，在"构建"步骤增加"Docker Build and Publish"，把构建结构Build到docker以及push到registry
+    > docker插件，在"构建"步骤增加"Docker Build and Publish"，把构建结果Build到docker以及push到registry
 - CloudBees Docker Custom Build Environment Plugin
     > docker插件，在"构建环境"步骤增加"Build inside a Docker container"，在构建环境的时候下载docker客户端，在docker中进行项目构建
+- docker-build-step
+    > docker插件，在"构建"步骤增加"Execute Docker command"，在构建过程中增加docker客户端指令步骤
 - Go Plugin
     > golang插件，在"构建环境"步骤增加"Set up Go programming language tools"，在构建环境的时候下载golang环境
 - GitLab Plugin
@@ -66,7 +68,7 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
     
     > "Test Connection" 检测GitLab API token能够正常连接
 
-- GoLang环境设置（"系统管理" -> "Global Tool Configuration" -> "Go" -> "Go安装"）
+- Docker环境设置（"系统管理" -> "Global Tool Configuration" -> "Docker" -> "Docker安装"）
     > "新增Docker" 新增一个Docker版本的环境变量
     
     > "Name" 设置为 docker_1.13.1；"自动安装" 选择上
@@ -75,7 +77,12 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
     
     > "Docker version" 设置为 1.13.1
     
-- Docker环境设置（"系统管理" -> "Global Tool Configuration" -> "Docker" -> "Docker安装"）
+- Docker Builder环境设置，对应docker-build-step插件（"系统管理" -> "系统设置" -> "Docker Builder"）
+    > "Docker URL" 设置为 tcp://docker:2375
+    
+    > "Test Connection" 检测连接是否正常
+    
+- GoLang环境设置（"系统管理" -> "Global Tool Configuration" -> "Go" -> "Go安装"）
     > "新增Go" 新增一个Go版本的环境变量
     
     > "别名" 设置为 go_1.8.1；"自动安装" 选择上
@@ -115,15 +122,15 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
     ```
         pwd
         echo "###################"
-        printenv
-        echo "###################"
         ls -al
         echo "###################"
         export GOPATH=`pwd`
+        echo "###################"
+        printenv
         rm -rf src
         mv vendor src
         echo "###################"
-        go build gin/gin_demo.go
+        go build -ldflags "-X main.VersionName=`cat VERSION`" gin/gin_demo.go
     ```
     
     > "新增构建步骤" -> "Docker Build and Publish"
