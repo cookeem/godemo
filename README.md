@@ -162,10 +162,9 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
     ```
         docker exec -ti jenkins bash
         curl docker:8081/user/haijian/ok
-        haijian is /ok
     ```
 
-- 在docker容器中测试godemo是否启动正常
+- 在docker容器中测试godemo是否启动正常，检测logs中的App Version
     ```
         docker exec -ti docker ash
         docker images
