@@ -8,6 +8,7 @@ import (
 
 // 定义应用版本
 // go build -ldflags "-X main.VersionName=`cat VERSION`" gin/gin_demo.go
+
 var VersionName = "No Version Provided"
 
 func main() {
