@@ -1,0 +1,62 @@
+version: '2'
+
+services:
+  docker:
+    image: docker:dind
+    container_name: docker
+    hostname: docker
+    privileged: true
+    volumes:
+      - /Volumes/Share/docker_data/docker-compose-ci/daemon.json:/etc/docker/daemon.json
+    # ports:
+    #   - 2375:2375
+    networks:
+      - cinet
+
+  registry:
+    image: registry
+    container_name: registry
+    hostname: registry
+    volumes:
+      - /Volumes/Share/docker_data/registry:/var/lib/registry
+    ports:
+      - 5000:5000
+    networks:
+      - cinet
+
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    hostname: gitlab
+    volumes:
+      - /Volumes/Share/docker_data/gitlab/config:/etc/gitlab
+      - /Volumes/Share/docker_data/gitlab/logs:/var/log/gitlab
+      - /Volumes/Share/docker_data/gitlab/data:/var/opt/gitlab
+    ports:
+      - 80:80
+    environment:
+      - GITLAB_OMNIBUS_CONFIG="nginx['client_max_body_size'] = '100m'; gitlab_rails['lfs_enabled'] = true;"
+    networks:
+      - cinet
+
+  jenkins:
+    image: jenkins
+    container_name: jenkins
+    hostname: jenkins
+    volumes:
+      - /Volumes/Share/docker_data/jenkins:/var/jenkins_home
+    ports:
+      - 8080:8080
+      - 8081:8081
+      - 50000:50000
+    environment:
+      - GITLAB_OMNIBUS_CONFIG="nginx['client_max_body_size'] = '100m'; gitlab_rails['lfs_enabled'] = true;"
+    depends_on:
+      - registry
+      - gitlab
+    networks:
+      - cinet
+
+networks:
+  cinet:
+    driver: bridge
