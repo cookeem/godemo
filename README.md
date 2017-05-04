@@ -136,6 +136,7 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
     > "新增构建步骤" -> "Docker Build and Publish"
     ```
        "Repository Name" 设置为 godemo
+       "Tag" 设置为 0.1.0 
        "Docker Host URI" 设置为 tcp://docker:2375 （连接远程docker）
        "Server credentials" 设置为 none
        "Docker registry URL" 设置为 http://registry:5000/v2/
