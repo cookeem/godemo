@@ -7,9 +7,7 @@
 # alpine                 latest              4a415e366388        2 months ago         3.98 MB
 # registry:5000/alpine   latest              4a415e366388        2 months ago         3.98 MB
 
-
-
-FROM alpine
+FROM registry:5000/alpine
 MAINTAINER cookeem cookeem@qq.com
 
 COPY gin_demo /gin_demo
