@@ -1,3 +1,5 @@
+# 用于构建golang项目并打包docker image
+
 # 在jenkins下测试：
 # cd /var/jenkins_home/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/docker_1.13.1/bin
 # ./docker -H tcp://docker:2375 images

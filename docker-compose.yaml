@@ -40,7 +40,7 @@ services:
       - cinet
 
   jenkins:
-    image: jenkins
+    image: jenkins-kube
     container_name: jenkins
     hostname: jenkins
     volumes:
@@ -49,8 +49,6 @@ services:
       - 8080:8080
       - 8081:8081
       - 50000:50000
-    environment:
-      - GITLAB_OMNIBUS_CONFIG="nginx['client_max_body_size'] = '100m'; gitlab_rails['lfs_enabled'] = true;"
     depends_on:
       - registry
       - gitlab
@@ -60,3 +58,4 @@ services:
 networks:
   cinet:
     driver: bridge
+

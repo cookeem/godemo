@@ -56,7 +56,9 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
     > gitlab插件，在"构建触发器"步骤增加"Build when a change is pushed to GitLab. GitLab CI Service URL: http://localhost:8080/project/XXX"
     
     > 当gitlab代码发生提交的时候，通过gitlab hook主动触发构建 
-
+- Kubernetes plugin
+    > kubernetes插件，可以在kubernetes中启动相关pod
+    
 ### Jenkins中GitLab、Docker以及GoLang基础配置
 
 - GitLab连接设置（"系统管理" -> "系统设置" -> "GitLab connections"）
@@ -178,3 +180,4 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
     ```
         docker-compose stop && docker-compose rm -f
     ```
+
