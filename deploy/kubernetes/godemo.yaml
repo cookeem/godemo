@@ -19,7 +19,7 @@ spec:
           path: /etc/timezone
       containers:
       - name: godemo
-        image: k8s-registry:5000/godemo:0.1.11
+        image: k8s-registry:5000/cookeem/godemo:$(APP_VERSION_NAME)
         imagePullPolicy: Always
         ports:
         - containerPort: 8081
