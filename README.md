@@ -139,8 +139,15 @@ echo "###################"
 rm -rf src
 mv vendor src
 echo "###################"
+# 编译前测试
+go test ./test
+echo "###################"
+echo "###################"
+echo "# begin go testing"
 # 进行go编译打包
 go build -ldflags "-X main.VersionName=$APP_VERSION_NAME" gin/gin_demo.go
+echo "# end of go testing"
+echo "###################"
 echo "###################"
 # 把go编译包打包成docker镜像
 docker -H tcp://ci-docker:2375 build -t k8s-registry:5000/cookeem/godemo:$APP_VERSION_NAME .
