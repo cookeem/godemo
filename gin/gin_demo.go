@@ -17,7 +17,7 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "Usage: /user/name or /user/name/action\n")
+		c.String(http.StatusOK, "Usage: /user/name or /user/name/action, Version: %s\n", VersionName)
 	})
 
 	// This handler will match /user/john but will not match neither /user/ or /user

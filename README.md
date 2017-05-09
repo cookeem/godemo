@@ -144,8 +144,10 @@ go build -ldflags "-X main.VersionName=$APP_VERSION_NAME" gin/gin_demo.go
 echo "###################"
 # 把go编译包打包成docker镜像
 docker -H tcp://ci-docker:2375 build -t k8s-registry:5000/cookeem/godemo:$APP_VERSION_NAME .
+docker -H tcp://ci-docker:2375 tag k8s-registry:5000/cookeem/godemo:$APP_VERSION_NAME k8s-registry:5000/cookeem/godemo:latest
 # 把docker镜像推送到k8s-registry:5000
 docker -H tcp://ci-docker:2375 push k8s-registry:5000/cookeem/godemo:$APP_VERSION_NAME
+docker -H tcp://ci-docker:2375 push k8s-registry:5000/cookeem/godemo:latest
 # 使用kubectl拉起镜像
 kubectl apply -f deploy/kubernetes/godemo.yaml
 ```
