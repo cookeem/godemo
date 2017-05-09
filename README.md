@@ -143,13 +143,11 @@ echo "###################"
 go build -ldflags "-X main.VersionName=$APP_VERSION_NAME" gin/gin_demo.go
 echo "###################"
 # 把go编译包打包成docker镜像
-docker -H tcp://ci-docker:2375 build -t k8s-registry:5000/cookeem/godemo:$APP_VERSION_NAME deploy/
+docker -H tcp://ci-docker:2375 build -t k8s-registry:5000/cookeem/godemo:$APP_VERSION_NAME .
 # 把docker镜像推送到k8s-registry:5000
 docker -H tcp://ci-docker:2375 push k8s-registry:5000/cookeem/godemo:$APP_VERSION_NAME
 # 使用kubectl拉起镜像
-kubectl run godemo --image=k8s-registry:5000/cookeem/godemo:$APP_VERSION_NAME
-# 使用kubectl创建服务
-kubectl expose deployment godemo --name=godemo --type=NodePort --port=8081 --target-port=8081
+kubectl apply -f deploy/kubernetes/godemo.yaml
 ```
     
     > "新增构建步骤" -> "Docker Build and Publish" （该项不要设置）
