@@ -31,7 +31,7 @@ func main() {
 	router.GET("/user/:name/*action", func(c *gin.Context) {
 		name := c.Param("name")
 		action := c.Param("action")
-		message := name + " is " + action + "\n"
+		message := name + " is " + action
 		c.String(http.StatusOK, "%s, Version: %s\n", message, VersionName)
 	})
 

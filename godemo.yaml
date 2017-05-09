@@ -1,0 +1,45 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: godemo
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: godemo
+    spec:
+      volumes:
+      - name: localtime
+        hostPath:
+          path: /etc/localtime
+      - name: timezone
+        hostPath:
+          path: /etc/timezone
+      containers:
+      - name: godemo
+        image: registry:5000/godemo:0.1.8
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8081
+        resources:
+          limits:
+            memory: "256Mi"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: godemo
+  labels:
+    app: godemo
+spec:
+  type: NodePort
+  selector:
+    app: godemo
+  ports:
+  - name: port-8081
+    port: 8081
+    targetPort: 8081
+    nodePort: 30120
