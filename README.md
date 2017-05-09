@@ -121,21 +121,38 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
     
 - "构建"设置
     > "新增构建步骤" -> "Execute shell"，执行以下构建脚本
-    ```
-        pwd
-        echo "###################"
-        ls -al
-        echo "###################"
-        export GOPATH=`pwd`
-        echo "###################"
-        printenv
-        rm -rf src
-        mv vendor src
-        echo "###################"
-        go build -ldflags "-X main.VersionName=`cat VERSION`" gin/gin_demo.go
-    ```
+```
+# pwd
+# echo "###################"
+# ls -al
+# echo "###################"
+# 设置GOPATH，保证go的编译
+export GOPATH=`pwd`
+# 设置DOCKER_HOME
+export MY_DOCKER_HOME=/var/jenkins_home/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/docker_1.13.1
+export PATH=$PATH:$MY_DOCKER_HOME/bin
+# 从VERSION文件获取APP版本信息
+export APP_VERSION_NAME=`cat VERSION`
+echo "###################"
+# printenv
+# 设置go依赖包的位置为src
+rm -rf src
+mv vendor src
+echo "###################"
+# 进行go编译打包
+go build -ldflags "-X main.VersionName=$APP_VERSION_NAME" gin/gin_demo.go
+echo "###################"
+# 把go编译包打包成docker镜像
+docker -H tcp://ci-docker:2375 build -t k8s-registry:5000/cookeem/godemo:$APP_VERSION_NAME deploy/
+# 把docker镜像推送到k8s-registry:5000
+docker -H tcp://ci-docker:2375 push k8s-registry:5000/cookeem/godemo:$APP_VERSION_NAME
+# 使用kubectl拉起镜像
+kubectl run godemo --image=k8s-registry:5000/cookeem/godemo:$APP_VERSION_NAME
+# 使用kubectl创建服务
+kubectl expose deployment godemo --name=godemo --type=NodePort --port=8081 --target-port=8081
+```
     
-    > "新增构建步骤" -> "Docker Build and Publish"
+    > "新增构建步骤" -> "Docker Build and Publish" （该项不要设置）
     ```
        "Repository Name" 设置为 godemo
        "Tag" 设置为 0.1.0 
@@ -147,7 +164,7 @@ Jenkins与GitLab、Docker、Registry、GoLang的集成
        "Docker installation" 选择 docker_1.13.1，在构建的时候自动安装docker客户端
     ```
 
-    > "新增构建步骤" -> "Execute shell"，执行以下构建脚本
+    > "新增构建步骤" -> "Execute shell"，执行以下构建脚本 （该项不要设置）
     ```
         /var/jenkins_home/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/docker_1.13.1/bin/docker -H tcp://docker:2375 stop godemo
         /var/jenkins_home/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/docker_1.13.1/bin/docker -H tcp://docker:2375 rm godemo
