@@ -1,3 +1,17 @@
+持续集成流程
+---
+
+1. 开发团队提交代码到gitlab
+2. gitlab检测到master分支代码发生提交
+3. gitlab使用webhook触发jenkins启动持续集成
+4. jenkins从gitlab拉取代码，并自动配置编译环境
+5. jenkins进行go项目自动代码测试
+6. jenkins进行go项目构建打包
+7. jenkins调用远程docker，把go项目编译包打包成docker镜像
+8. jenkins调用远程docker，把打包的docker镜像push到远程registry
+9. jenkins调用远程kubernetes，通知kubernetes从registry拉取最新的docker镜像，并且通过滚动更新的方式，把应用发布到生产环境，当应用完全发布后，下线旧的服务，中间不会中断服务。
+
+
 使用GoDep
 ---
 * 安装godep
