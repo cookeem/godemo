@@ -16,7 +16,6 @@
 .glide/
 
 .DS_Store
-.gitignore
 .idea/
 cookeem.com.iml
 test.log
