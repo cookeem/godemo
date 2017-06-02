@@ -20,7 +20,7 @@ spec:
       containers:
       - name: godemo
         # 当新版本发布，必须保证这里的版本与VERSION文件一致
-        image: k8s-registry:5000/cookeem/godemo:0.1.17
+        image: k8s-registry:5000/cookeem/godemo:0.1.18
         imagePullPolicy: Always
         ports:
         - containerPort: 8081
