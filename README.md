@@ -219,3 +219,21 @@ kubectl apply -f deploy/kubernetes/godemo.yaml
         docker-compose stop && docker-compose rm -f
     ```
 
+# 使用docker编译linux_amd64可运行包
+
+- 因为MacOSX下边编译的包不能在linux下运行，因此需要使用linux进行go项目编译
+
+- 在godemo目录下运行docker，并执行以下命令进行包编译 
+
+    ```sh
+    # 运行容器
+    docker run -ti --rm -v "$PWD":/usr/src/cookeem.com -w /usr/src/cookeem.com golang:alpine ash
+    
+    # 以下命令在container中运行
+    mkdir /lib64
+    ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
+    export GOPATH=$(pwd)
+    mv vendor src
+    go build gin/gin_demo.go
+    mv src vendor
+    ```

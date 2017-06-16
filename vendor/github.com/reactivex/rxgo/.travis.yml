@@ -1,0 +1,14 @@
+language: go
+
+go:
+  - 1.6
+  - tip
+
+go_import_path: github.com/reactivex/rxgo
+
+install:
+  - go get github.com/mattn/goveralls
+  - go get github.com/stretchr/testify/assert
+  - go get github.com/gorilla/websocket
+
+script: goveralls -service travis-ci -repotoken $COVERALLS_TOKEN

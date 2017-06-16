@@ -39,6 +39,38 @@
 			"Rev": "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
 		},
 		{
+			"ImportPath": "github.com/reactivex/rxgo",
+			"Rev": "0d2bff7eafd3f98b1012ec4e8dc421e6b00ffa2f"
+		},
+		{
+			"ImportPath": "github.com/reactivex/rxgo/errors",
+			"Rev": "0d2bff7eafd3f98b1012ec4e8dc421e6b00ffa2f"
+		},
+		{
+			"ImportPath": "github.com/reactivex/rxgo/fx",
+			"Rev": "0d2bff7eafd3f98b1012ec4e8dc421e6b00ffa2f"
+		},
+		{
+			"ImportPath": "github.com/reactivex/rxgo/handlers",
+			"Rev": "0d2bff7eafd3f98b1012ec4e8dc421e6b00ffa2f"
+		},
+		{
+			"ImportPath": "github.com/reactivex/rxgo/iterable",
+			"Rev": "0d2bff7eafd3f98b1012ec4e8dc421e6b00ffa2f"
+		},
+		{
+			"ImportPath": "github.com/reactivex/rxgo/observable",
+			"Rev": "0d2bff7eafd3f98b1012ec4e8dc421e6b00ffa2f"
+		},
+		{
+			"ImportPath": "github.com/reactivex/rxgo/observer",
+			"Rev": "0d2bff7eafd3f98b1012ec4e8dc421e6b00ffa2f"
+		},
+		{
+			"ImportPath": "github.com/reactivex/rxgo/subscription",
+			"Rev": "0d2bff7eafd3f98b1012ec4e8dc421e6b00ffa2f"
+		},
+		{
 			"ImportPath": "golang.org/x/net/context",
 			"Rev": "d1e1b351919c6738fdeb9893d5c998b161464f0c"
 		},
