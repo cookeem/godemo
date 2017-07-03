@@ -12,7 +12,7 @@ import (
 var VersionName = "No Version Provided"
 
 func main() {
-	fmt.Println("App Version is:", VersionName)
+	fmt.Println("这个是新版本来的！ App Version is:", VersionName)
 
 	router := gin.Default()
 
