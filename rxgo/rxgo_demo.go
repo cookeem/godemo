@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/reactivex/rxgo/iterable"
 	"errors"
+	"fmt"
+	"github.com/reactivex/rxgo/iterable"
 	"github.com/reactivex/rxgo/observable"
 	"github.com/reactivex/rxgo/observer"
-	"fmt"
 )
 
 func main() {
@@ -31,5 +31,5 @@ func main() {
 	source := observable.From(it)
 
 	sub := source.Subscribe(watcher)
-	<- sub
+	<-sub
 }

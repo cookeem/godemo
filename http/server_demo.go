@@ -1,14 +1,15 @@
 package main
 
 import (
-	"io"
-	"net/http"
 	"log"
+	"net/http"
+	"fmt"
+	"time"
 )
 
 // hello world, the web server
-func HelloServer(w http.ResponseWriter, req *http.Request) {
-	io.WriteString(w, "hello, world!\n")
+func HelloServer(resp http.ResponseWriter, req *http.Request) {
+	fmt.Fprintln(resp, time.Now(), req.Header, req.Host)
 }
 
 func main() {

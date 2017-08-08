@@ -1,7 +1,7 @@
 package main
 
 import (
-	"cookeem.com/ch2/common"
+	"godemo/ch2/common"
 	"errors"
 	"fmt"
 )

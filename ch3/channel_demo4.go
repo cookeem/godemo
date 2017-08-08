@@ -1,8 +1,8 @@
 package main
 
 import (
-	"time"
 	"fmt"
+	"time"
 )
 
 func main() {
@@ -16,15 +16,14 @@ func main() {
 		return
 	}()
 	go func() {
-		i := <- cht1
+		i := <-cht1
 		time.Sleep(time.Second * 1)
-		i ++
+		i++
 		fmt.Println(time.Now(), "cht2", i)
 		cht2 <- i
 		return
 	}()
-	i := <- cht2
+	i := <-cht2
 	fmt.Println(time.Now(), "cht2 finish:", i)
-
 
 }

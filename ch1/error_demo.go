@@ -42,7 +42,8 @@ func CopyFile(src, dst string) (w int64, err error) {
 		return
 	}
 	defer dstFile.Close()
-	return io.Copy(dstFile, srcFile)
+	w, err = io.Copy(dstFile, srcFile)
+	return
 }
 
 func SimplePanicRecover() {

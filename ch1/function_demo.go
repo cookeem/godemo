@@ -1,7 +1,7 @@
 package main
 
 import (
-	"cookeem.com/ch1/common"
+	"../ch1/common"
 	"fmt"
 )
 

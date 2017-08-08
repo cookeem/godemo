@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"gopkg.in/gin-gonic/gin.v1"
 	"net/http"
-	"fmt"
 )
 
 // 定义应用版本
@@ -12,7 +12,7 @@ import (
 var VersionName = "No Version Provided"
 
 func main() {
-	fmt.Println("这个是新版本来的！ App Version is:", VersionName)
+	fmt.Println("App Version is:", VersionName)
 
 	router := gin.Default()
 

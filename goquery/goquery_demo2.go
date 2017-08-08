@@ -1,42 +1,42 @@
 package main
 
 import (
-	"log"
-	"github.com/PuerkitoBio/goquery"
-	"strings"
-	"os"
-	"net/url"
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
+	"log"
+	"net/url"
+	"os"
 	"strconv"
+	"strings"
 )
 
 type Project struct {
-	URL string
-	FullURL string
-	Title string
-	UserName string
+	URL       string
+	FullURL   string
+	Title     string
+	UserName  string
 	LoginName string
-	Lang string
-	Desc string
-	Watches int
-	Stars int
-	Forks int
+	Lang      string
+	Desc      string
+	Watches   int
+	Stars     int
+	Forks     int
 }
 
 type User struct {
-	URL string
-	FullURL string
-	UserName string
-	LoginName string
-	Followers int
+	URL        string
+	FullURL    string
+	UserName   string
+	LoginName  string
+	Followers  int
 	Followings int
-	Stars int
-	Watches int
+	Stars      int
+	Watches    int
 }
 
 type ProjectStar struct {
 	ProjectURL string
-	LoginName string
+	LoginName  string
 }
 
 func getAbsUrl(strRootURL, strRelaURL string) (link string, err error) {
