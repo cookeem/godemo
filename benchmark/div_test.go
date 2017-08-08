@@ -1,5 +1,7 @@
 package benchmark
 
+//在根目录运行：go run gin/gin_demo.go
+//在当前目录下运行： go test -bench=".*"
 import (
 	"testing"
 	"math/rand"
@@ -34,8 +36,10 @@ func Benchmark_Http(b *testing.B) {
 	b.StartTimer()
 
 	for i := 0; i < b.N; i++ {
-		resp, _ := http.Get("http://localhost:8081/")
-		resp.Body.Close()
-
+		req, err := http.NewRequest(http.MethodGet, "http://localhost:8081/", nil)
+		if err != nil {
+			panic(err)
+		}
+		http.DefaultClient.Do(req)
 	}
 }
