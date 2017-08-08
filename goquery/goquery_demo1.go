@@ -9,7 +9,33 @@ import (
 	"strings"
 	"runtime"
 	"time"
+	"io/ioutil"
+	"gopkg.in/yaml.v2"
+	"strconv"
 )
+
+type FieldType struct {
+	Name string
+	Pattern string
+	IsURL bool
+	Attr string
+	ReplaceSource string
+	ReplaceTarget string
+}
+
+type ListType struct {
+	Pattern string
+	Fields [] FieldType
+}
+
+type ContentType struct {
+	Fields [] FieldType
+}
+
+type ParserConfigType struct {
+	List ListType
+	Content ContentType
+}
 
 func parseAbsUrl(strRootURL, strRelaURL string) (link string, err error) {
 	urlRoot, err := url.Parse(strRootURL)
@@ -32,58 +58,86 @@ func parseAbsUrl(strRootURL, strRelaURL string) (link string, err error) {
 	return link, err
 }
 
-func parseListPage(strURL string, logFile, logStdout *log.Logger) (links []string, err error) {
-	//strURL := "http://git.oschina.net/cookeem/CookIM/stargazers"
+func parseListPage(strURL string, listConfig ListType, logFile, logStdout *log.Logger) (items []map[string] string, err error) {
 	document, err := goquery.NewDocument(strURL)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
-	// Find the review items
-	document.Find("div[class='item user-list-item']").Each(func(i int, s *goquery.Selection) {
-		// For each item found, get the band and title
-		name := s.Find("div.header").Text()
-		name = strings.Replace(name, "\n", "", -1)
-		avatar := s.Find("img.avater").AttrOr("src", "")
-		link := s.Find("div.header > a").AttrOr("href", "")
-		link, _ = parseAbsUrl(strURL, link)
-		if link != "" {
-			links = append(links, link)
+	if listConfig.Pattern == "" || len(listConfig.Fields) == 0 {
+		log.Fatal("crawel.yaml config error")
+	}
+
+	document.Find(listConfig.Pattern).Each(func(i int, s *goquery.Selection) {
+		logStr := strconv.Itoa(i) + " "
+		item := make(map[string] string)
+		for _, field := range listConfig.Fields {
+			k := field.Name
+			v := ""
+			node := s.Find(field.Pattern)
+			if field.Attr == "" {
+				v = node.Text()
+			} else {
+				v = node.AttrOr(field.Attr, "")
+			}
+			if field.ReplaceSource != "" {
+				v = strings.Replace(v, field.ReplaceSource, field.ReplaceTarget, -1)
+			}
+			if field.IsURL && v != "" {
+				v, _ = parseAbsUrl(strURL, v)
+			}
+			item[k] = v
+			logStr = logStr + k + ": " + v + ", "
 		}
-		logFile.Printf("Name %d: %s, %v, %v\n", i, name, avatar, link)
-		logStdout.Printf("Name %d: %s, %v, %v\n", i, name, avatar, link)
+		items = append(items, item)
+		logFile.Println(logStr)
+		logStdout.Println(logStr)
+		logFile.Println("#########################")
+		logStdout.Println("#########################")
 	})
 	return
 }
 
-func parseContentPage(strURL string) (name, numText string, err error) {
+func parseContentPage(strURL string, contentConfig ContentType) (item map[string] string, err error) {
 	//strURL := "http://git.oschina.net/fulus"
+	item = make(map[string] string)
+
 	document, err := goquery.NewDocument(strURL)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
-	// Find the review items
-	name = document.Find("div.user-info").Text()
-	name = strings.Replace(name, "\n", " ", -1)
-	numText = document.Find("div[class='git-user-infodata'] > div[class='ui grid'] > div.four").Text()
-	numText = strings.Replace(numText, "\n", " ", -1)
+
+	for _, field := range contentConfig.Fields {
+		k := field.Name
+		v := ""
+		node := document.Find(field.Pattern)
+		if field.Attr == "" {
+			v = node.Text()
+		} else {
+			v = node.AttrOr(field.Attr, "")
+		}
+		if field.ReplaceSource != "" {
+			v = strings.Replace(v, field.ReplaceSource, field.ReplaceTarget, -1)
+		}
+		item[k] = v
+	}
 	return
 }
 
-func parseContentJob(w int, jobs chan string, results chan string, logFile, logStdout *log.Logger) {
-	for link := range jobs {
+func parseContentJob(w int, jobs chan string, contentConfig ContentType, results chan string, logFile, logStdout *log.Logger) {
+	for strURL := range jobs {
 		//必须要有results，不然parseContentPage还没有执行完就会退出
 		t1 := time.Now()
-		name, numText, err := parseContentPage(link)
+		item, err := parseContentPage(strURL, contentConfig)
 		if err != nil {
 			log.Fatal(err)
 			return
 		}
 		t2 := time.Now()
 		d := t2.Sub(t1)
-		logFile.Println("worker", w, "take", d,"## Name:", name, "## Tags:", numText)
-		logStdout.Println("worker", w, "take", d, "## Name:", name, "## Tags:", numText)
+		logFile.Println("worker", w, "take", d, "##", item)
+		logStdout.Println("worker", w, "take", d, "##", item)
 		results <- "ok"
 	}
 }
@@ -91,40 +145,64 @@ func parseContentJob(w int, jobs chan string, results chan string, logFile, logS
 func main() {
 	strURL := "http://git.oschina.net/cookeem/CookIM/stargazers?page=1"
 
-	fileName := "goquery.log"
-	file, err := os.Create(fileName)
+	logName := "goquery.log"
+	fileLog, err := os.Create(logName)
 	if err != nil {
 		log.SetPrefix("[ERROR]")
 		log.SetFlags(log.LstdFlags)
 		log.Println(err)
 	}
-	defer file.Close()
-	logFile := log.New(file, "[DEBUG]", log.LstdFlags)
+	defer fileLog.Close()
+	logFile := log.New(fileLog, "[DEBUG]", log.LstdFlags)
 	logStdout := log.New(os.Stdout, "[DEBUG]", log.LstdFlags)
 
-	links, err := parseListPage(strURL, logFile, logStdout)
+	fileYaml, err := os.Open("conf/crawel.yaml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer fileYaml.Close()
+
+	byteYaml, err := ioutil.ReadAll(fileYaml)
+	parserConfig := ParserConfigType{}
+	err = yaml.Unmarshal(byteYaml, &parserConfig)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	listConfig := parserConfig.List
+	contentConfig := parserConfig.Content
+
+	items, err := parseListPage(strURL, listConfig, logFile, logStdout)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	logFile.Println("####################################")
+	logStdout.Println("####################################")
+
 	//jobs为带缓冲channel
-	numOfJobs := len(links)
+	numOfJobs := len(items)
 	numOfWorkers := runtime.NumCPU()
 	runtime.GOMAXPROCS(numOfWorkers)
 	jobs := make(chan string, numOfJobs)
 	results := make(chan string, numOfJobs)
-	for i := 1; i <= numOfWorkers * 2; i++ {
+	for i := 1; i <= numOfWorkers * 4; i++ {
 		//启动numOfWorkers个goroutine
-		go parseContentJob(i, jobs, results, logFile, logStdout)
+		go parseContentJob(i, jobs, contentConfig, results, logFile, logStdout)
 	}
 
 	//把job分配给goroutine
-	for _, link := range links {
-		jobs <- link
+	for _, item := range items {
+		jobs <- item["url"]
 	}
-	for a := 1; a <= numOfJobs; a++ {
-		<-results
+
+	for range items {
+		select {
+		case <-results:
+		case <-time.After(time.Second * 2):
+			fmt.Println("!!!!!! timeout 2 seconds")
+		}
 	}
 
 	//在jobs写入的程序段进行channel关闭

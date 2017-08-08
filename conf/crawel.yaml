@@ -1,0 +1,25 @@
+list:
+  pattern: "div[class='item user-list-item']"
+  fields:
+  - name: "name"
+    pattern: "div.header"
+    replacesource: "\n"
+    replacetarget: ""
+  - name: "avatar"
+    pattern: "img.avater"
+    attr: "src"
+  - name: "url"
+    isurl: true
+    pattern: "div.header > a"
+    attr: "href"
+
+content:
+  fields:
+  - name: "name"
+    pattern: "div.user-info"
+    replacesource: "\n"
+    replacetarget: ""
+  - name: "numText"
+    pattern: "div[class='git-user-infodata'] > div[class='ui grid'] > div.four"
+    replacesource: "\n"
+    replacetarget: " "
