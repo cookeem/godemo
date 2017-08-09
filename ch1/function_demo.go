@@ -1,7 +1,7 @@
 package main
 
 import (
-	"../ch1/common"
+	"godemo/ch1/common"
 	"fmt"
 )
 

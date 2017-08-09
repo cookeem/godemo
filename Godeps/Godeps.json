@@ -16,6 +16,11 @@
 			"Rev": "65919c611220063037b1db8eb334acaf17a6d8ea"
 		},
 		{
+			"ImportPath": "github.com/blang/semver",
+			"Comment": "v3.5.1",
+			"Rev": "2ee87856327ba09384cabd113bc6b5d174e9ec0f"
+		},
+		{
 			"ImportPath": "github.com/gin-gonic/gin/binding",
 			"Comment": "v1.1.4",
 			"Rev": "e2212d40c62a98b388a5eb48ecbdcf88534688ba"
@@ -69,6 +74,31 @@
 		{
 			"ImportPath": "github.com/reactivex/rxgo/subscription",
 			"Rev": "0d2bff7eafd3f98b1012ec4e8dc421e6b00ffa2f"
+		},
+		{
+			"ImportPath": "github.com/tebeka/selenium",
+			"Comment": "v0.9.3-90-g4adf11e",
+			"Rev": "4adf11e6b4d1766e60690ab8453487eaf898d4cc"
+		},
+		{
+			"ImportPath": "github.com/tebeka/selenium/chrome",
+			"Comment": "v0.9.3-90-g4adf11e",
+			"Rev": "4adf11e6b4d1766e60690ab8453487eaf898d4cc"
+		},
+		{
+			"ImportPath": "github.com/tebeka/selenium/firefox",
+			"Comment": "v0.9.3-90-g4adf11e",
+			"Rev": "4adf11e6b4d1766e60690ab8453487eaf898d4cc"
+		},
+		{
+			"ImportPath": "github.com/tebeka/selenium/internal/zip",
+			"Comment": "v0.9.3-90-g4adf11e",
+			"Rev": "4adf11e6b4d1766e60690ab8453487eaf898d4cc"
+		},
+		{
+			"ImportPath": "github.com/tebeka/selenium/log",
+			"Comment": "v0.9.3-90-g4adf11e",
+			"Rev": "4adf11e6b4d1766e60690ab8453487eaf898d4cc"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",

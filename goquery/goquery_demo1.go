@@ -23,6 +23,13 @@ type FieldType struct {
 	ReplaceTarget string
 }
 
+type ListPagesType struct {
+	Pattern string
+	IsURL bool
+	Attr string
+	Prefix string
+}
+
 type ListType struct {
 	Pattern string
 	Fields [] FieldType
@@ -33,6 +40,10 @@ type ContentType struct {
 }
 
 type ParserConfigType struct {
+	URL string
+	Timeout int
+	ContentUrlField string
+	ListPages ListPagesType
 	List ListType
 	Content ContentType
 }
@@ -58,7 +69,7 @@ func parseAbsUrl(strRootURL, strRelaURL string) (link string, err error) {
 	return link, err
 }
 
-func parseListPage(strURL string, listConfig ListType, logFile, logStdout *log.Logger) (items []map[string] string, err error) {
+func parseListPage(strURL string, listConfig ListType, listPagesConfig ListPagesType, logFile, logStdout *log.Logger) (items []map[string] string, pages []string, err error) {
 	document, err := goquery.NewDocument(strURL)
 	if err != nil {
 		log.Fatal(err)
@@ -89,11 +100,18 @@ func parseListPage(strURL string, listConfig ListType, logFile, logStdout *log.L
 			item[k] = v
 			logStr = logStr + k + ": " + v + ", "
 		}
+
 		items = append(items, item)
 		logFile.Println(logStr)
 		logStdout.Println(logStr)
-		logFile.Println("#########################")
-		logStdout.Println("#########################")
+	})
+
+	document.Find(listPagesConfig.Pattern).Each(func(i int, s *goquery.Selection) {
+		link := s.AttrOr(listPagesConfig.Attr, "")
+		if strings.Index(link, listPagesConfig.Prefix) == 0 {
+			link, _ = parseAbsUrl(strURL, link)
+			pages = append(pages, link)
+		}
 	})
 	return
 }
@@ -127,7 +145,6 @@ func parseContentPage(strURL string, contentConfig ContentType) (item map[string
 
 func parseContentJob(w int, jobs chan string, contentConfig ContentType, results chan string, logFile, logStdout *log.Logger) {
 	for strURL := range jobs {
-		//必须要有results，不然parseContentPage还没有执行完就会退出
 		t1 := time.Now()
 		item, err := parseContentPage(strURL, contentConfig)
 		if err != nil {
@@ -135,16 +152,15 @@ func parseContentJob(w int, jobs chan string, contentConfig ContentType, results
 			return
 		}
 		t2 := time.Now()
-		d := t2.Sub(t1)
-		logFile.Println("worker", w, "take", d, "##", item)
-		logStdout.Println("worker", w, "take", d, "##", item)
+		duration := t2.Sub(t1)
+		logFile.Println("worker", w, "take", duration, "##", strURL, item)
+		logStdout.Println("worker", w, "take", duration, "##", strURL, item)
 		results <- "ok"
 	}
 }
 
 func main() {
-	strURL := "http://git.oschina.net/cookeem/CookIM/stargazers?page=1"
-
+	t1 := time.Now()
 	logName := "goquery.log"
 	fileLog, err := os.Create(logName)
 	if err != nil {
@@ -169,10 +185,17 @@ func main() {
 		log.Fatal(err)
 	}
 
+	strURL := parserConfig.URL
+	timeout := parserConfig.Timeout
+	contentUrlField := parserConfig.ContentUrlField
+	listPagesConfig := parserConfig.ListPages
 	listConfig := parserConfig.List
 	contentConfig := parserConfig.Content
 
-	items, err := parseListPage(strURL, listConfig, logFile, logStdout)
+	items, pages, err := parseListPage(strURL, listConfig, listPagesConfig, logFile, logStdout)
+	for _, page := range pages {
+		fmt.Println(page)
+	}
 
 	if err != nil {
 		log.Fatal(err)
@@ -194,18 +217,23 @@ func main() {
 
 	//把job分配给goroutine
 	for _, item := range items {
-		jobs <- item["url"]
+		jobs <- item[contentUrlField]
 	}
 
 	for range items {
 		select {
 		case <-results:
-		case <-time.After(time.Second * 2):
-			fmt.Println("!!!!!! timeout 2 seconds")
+		case <-time.After(time.Second * time.Duration(timeout)):
+			fmt.Println("!!!!!! timeout" , timeout, "seconds")
 		}
 	}
 
 	//在jobs写入的程序段进行channel关闭
 	close(jobs)
+
+	t2 := time.Now()
+	duration := t2.Sub(t1)
+	logFile.Println("total duration:", duration)
+	logStdout.Println("total duration:", duration)
 
 }

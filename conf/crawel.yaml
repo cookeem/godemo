@@ -1,3 +1,12 @@
+url: "http://git.oschina.net/jfinal/jfinal/stargazers"
+timeout: 5
+contenturlfield: "url"
+listpages:
+  pattern: "div#git-discover-page > a"
+  attr: "href"
+  isurl: true
+  prefix: "/jfinal/jfinal/stargazers"
+
 list:
   pattern: "div[class='item user-list-item']"
   fields:
