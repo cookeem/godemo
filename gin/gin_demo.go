@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gopkg.in/gin-gonic/gin.v1"
 	"net/http"
+	"time"
 )
 
 // 定义应用版本
@@ -17,13 +18,13 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "Usage: /user/name or /user/name/action\n App Version is: %s", VersionName)
+		c.String(http.StatusOK, time.Now().String(), "Usage: /user/name or /user/name/action\n App Version is: %s", VersionName)
 	})
 
 	// This handler will match /user/john but will not match neither /user/ or /user
 	router.GET("/user/:name", func(c *gin.Context) {
 		name := c.Param("name")
-		c.String(http.StatusOK, "Hello %s\n App Version is: %s", name, VersionName)
+		c.String(http.StatusOK,"Hello %s\n App Version is: %s", name, VersionName)
 	})
 
 	// However, this one will match /user/john/ and also /user/john/send
