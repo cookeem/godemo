@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Draw Shape</title>
+</head>
+<body>
+    <select id="shapeType">
+        <option value ="circle">circle</option>
+        <option value ="rectangle">rectangle</option>
+    </select>
+    <input id="shapeLength" type="number" value="150"/>
+    <input id="mySubmit" type="submit" onclick="draw()"/>
+    <br />
+    <canvas id="myCanvas" width="800" height="600" style="border:1px solid #c3c3c3;">
+        您的浏览器不支持 HTML5 canvas 标签。
+    </canvas>
+</body>
+<script>
+
+	function draw() {
+        var shapeType = document.getElementById("shapeType").value;
+        var shapeLength = document.getElementById("shapeLength").value;
+		var c=document.getElementById("myCanvas");
+		var ctx=c.getContext("2d");
+		ctx.clearRect(0, 0, c.width, c.height);
+		ctx.fillStyle="#FF0000";
+        if (shapeType == "circle") {
+	        ctx.beginPath();
+	        ctx.arc(shapeLength,shapeLength,shapeLength,0,2*Math.PI);
+	        ctx.stroke();
+        } else {
+	        ctx.fillRect(0,0,shapeLength,shapeLength);
+        }
+
+    }
+
+</script>
+</html>

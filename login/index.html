@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+</head>
+<body>
+    <p>
+        <lo>
+            <li>输入账号必须输入密码。</li>
+            <li>如果输入手机号码，不输入密码，会返回验证码。</li>
+            <li>如果输入手机号码，输入密码，会检查验证码是否正确。</li>
+        </lo>
+    </p>
+    <p>
+        <lo>
+            <li>账号：user1，手机：13802880001，密码：123456</li>
+            <li>账号：user2，手机：13802880002，密码：654321</li>
+        </lo>
+    </p>
+    登录账号或者手机号 <input id="loginname" type="text"/>
+    <br />
+    手机登录可以不输入密码 <input id="passwd" type="password"/>
+    <br />
+    <input id="mySubmit" type="submit" onclick="login()"/>
+
+    <div id="tips"></div>
+</body>
+
+<script>
+    function login() {
+    	var tips = document.getElementById("tips");
+	    var loginname = document.getElementById("loginname").value;
+	    var passwd = document.getElementById("passwd").value;
+	    var params = "loginname="+loginname+"&passwd="+passwd;
+	    var xhr = new XMLHttpRequest();
+	    xhr.open('POST', "/login", true);
+	    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	    xhr.send(params);
+
+	    xhr.onreadystatechange = function() {//Call a function when the state changes.
+		    if (xhr.readyState == 4 && xhr.status == 200) {
+		    	tips.innerHTML = "";
+		    	tips.innerHTML = xhr.responseText;
+            }
+	    };
+    }
+</script>
+</html>
