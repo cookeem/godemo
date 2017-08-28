@@ -5,8 +5,8 @@ package main
 
 import "fmt"
 import (
-	"time"
 	"runtime"
+	"time"
 )
 
 func main() {

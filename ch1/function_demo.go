@@ -1,8 +1,8 @@
 package main
 
 import (
-	"godemo/ch1/common"
 	"fmt"
+	"godemo/ch1/common"
 )
 
 func main() {

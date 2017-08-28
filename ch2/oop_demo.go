@@ -1,8 +1,8 @@
 package main
 
 import (
-	"godemo/ch2/common"
 	"fmt"
+	"godemo/ch2/common"
 	"time"
 )
 

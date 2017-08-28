@@ -1,14 +1,14 @@
 package main
 
 import (
-	"gopkg.in/gin-gonic/gin.v1"
-	"database/sql"
-	_ "github.com/mattn/go-sqlite3"
-	"log"
-	"fmt"
-	"math/rand"
 	"crypto/md5"
+	"database/sql"
+	"fmt"
+	_ "github.com/mattn/go-sqlite3"
+	"gopkg.in/gin-gonic/gin.v1"
 	"io"
+	"log"
+	"math/rand"
 	"strconv"
 	"strings"
 )
@@ -65,7 +65,7 @@ func main() {
 				seed := rand.Int()
 				h := md5.New()
 				io.WriteString(h, strconv.Itoa(seed))
-				code := strings.ToUpper(fmt.Sprintf("%x", h.Sum(nil))[0: 6])
+				code := strings.ToUpper(fmt.Sprintf("%x", h.Sum(nil))[0:6])
 
 				stmt, err = db.Prepare("update users set code=? where mobile=?")
 				if err != nil {
@@ -91,8 +91,8 @@ func main() {
 		}
 
 		c.JSON(200, gin.H{
-			"success":  success,
-			"msg": msg,
+			"success": success,
+			"msg":     msg,
 		})
 	})
 	r.Run(":9090")

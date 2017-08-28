@@ -1,9 +1,9 @@
 package main
 
 import (
-	"godemo/ch2/common"
 	"errors"
 	"fmt"
+	"godemo/ch2/common"
 )
 
 type Rect struct {

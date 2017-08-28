@@ -3,9 +3,9 @@ package benchmark
 //在根目录运行：go run gin/gin_demo.go
 //在当前目录下运行： go test -bench=".*"
 import (
-	"testing"
 	"math/rand"
 	"net/http"
+	"testing"
 )
 
 func Benchmark_Division(b *testing.B) {

@@ -3,49 +3,49 @@ package main
 import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"gopkg.in/yaml.v2"
+	"io/ioutil"
 	"log"
 	"net/url"
 	"os"
-	"strings"
 	"runtime"
-	"time"
-	"io/ioutil"
-	"gopkg.in/yaml.v2"
 	"strconv"
+	"strings"
+	"time"
 )
 
 type FieldType struct {
-	Name string
-	Pattern string
-	IsURL bool
-	Attr string
+	Name          string
+	Pattern       string
+	IsURL         bool
+	Attr          string
 	ReplaceSource string
 	ReplaceTarget string
 }
 
 type ListPagesType struct {
 	Pattern string
-	IsURL bool
-	Attr string
-	Prefix string
+	IsURL   bool
+	Attr    string
+	Prefix  string
 }
 
 type ListType struct {
 	Pattern string
-	Fields [] FieldType
+	Fields  []FieldType
 }
 
 type ContentType struct {
-	Fields [] FieldType
+	Fields []FieldType
 }
 
 type ParserConfigType struct {
-	URL string
-	Timeout int
+	URL             string
+	Timeout         int
 	ContentUrlField string
-	ListPages ListPagesType
-	List ListType
-	Content ContentType
+	ListPages       ListPagesType
+	List            ListType
+	Content         ContentType
 }
 
 func parseAbsUrl(strRootURL, strRelaURL string) (link string, err error) {
@@ -69,7 +69,7 @@ func parseAbsUrl(strRootURL, strRelaURL string) (link string, err error) {
 	return link, err
 }
 
-func parseListPage(strURL string, listConfig ListType, listPagesConfig ListPagesType, logFile, logStdout *log.Logger) (items []map[string] string, pages []string, err error) {
+func parseListPage(strURL string, listConfig ListType, listPagesConfig ListPagesType, logFile, logStdout *log.Logger) (items []map[string]string, pages []string, err error) {
 	document, err := goquery.NewDocument(strURL)
 	if err != nil {
 		log.Fatal(err)
@@ -81,7 +81,7 @@ func parseListPage(strURL string, listConfig ListType, listPagesConfig ListPages
 
 	document.Find(listConfig.Pattern).Each(func(i int, s *goquery.Selection) {
 		logStr := strconv.Itoa(i) + " "
-		item := make(map[string] string)
+		item := make(map[string]string)
 		for _, field := range listConfig.Fields {
 			k := field.Name
 			v := ""
@@ -116,9 +116,9 @@ func parseListPage(strURL string, listConfig ListType, listPagesConfig ListPages
 	return
 }
 
-func parseContentPage(strURL string, contentConfig ContentType) (item map[string] string, err error) {
+func parseContentPage(strURL string, contentConfig ContentType) (item map[string]string, err error) {
 	//strURL := "http://git.oschina.net/fulus"
-	item = make(map[string] string)
+	item = make(map[string]string)
 
 	document, err := goquery.NewDocument(strURL)
 	if err != nil {
@@ -210,7 +210,7 @@ func main() {
 	runtime.GOMAXPROCS(numOfWorkers)
 	jobs := make(chan string, numOfJobs)
 	results := make(chan string, numOfJobs)
-	for i := 1; i <= numOfWorkers * 4; i++ {
+	for i := 1; i <= numOfWorkers*4; i++ {
 		//启动numOfWorkers个goroutine
 		go parseContentJob(i, jobs, contentConfig, results, logFile, logStdout)
 	}
@@ -224,7 +224,7 @@ func main() {
 		select {
 		case <-results:
 		case <-time.After(time.Second * time.Duration(timeout)):
-			fmt.Println("!!!!!! timeout" , timeout, "seconds")
+			fmt.Println("!!!!!! timeout", timeout, "seconds")
 		}
 	}
 

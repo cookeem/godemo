@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/tebeka/selenium"
 	"fmt"
-	"time"
-	"io/ioutil"
+	"github.com/tebeka/selenium"
 	"github.com/tebeka/selenium/log"
+	"io/ioutil"
+	"time"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 	// eager - will abort the wait when document.readyState is ‘interactive’ instead of waiting for ‘complete’.
 	// none - will abort the wait immediately, without waiting for any of the page to load.
 	caps := selenium.Capabilities{
-		"browserName": "firefox",
+		"browserName":      "firefox",
 		"pageLoadStrategy": "eager",
 	}
 	wd, err := selenium.NewRemote(caps, "http://localhost:4444/wd/hub/")
