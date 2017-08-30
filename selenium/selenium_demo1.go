@@ -3,25 +3,36 @@ package main
 import (
 	"fmt"
 	"github.com/tebeka/selenium"
-	"github.com/tebeka/selenium/log"
 	"io/ioutil"
 	"time"
 )
 
 func main() {
 	t1 := time.Now()
-	// docker run -d -p 5900:5900 -p 4444:4444 selenium/standalone-firefox-debug:latest
-	// open vnc://:secret@localhost:5900/
+
 
 	// pageLoadStrategy:
 	// normal - waits for document.readyState to be ‘complete’. This value is used by default.
 	// eager - will abort the wait when document.readyState is ‘interactive’ instead of waiting for ‘complete’.
 	// none - will abort the wait immediately, without waiting for any of the page to load.
 	caps := selenium.Capabilities{
-		"browserName":      "firefox",
+		"browserName":      "firefox", //phantomjs
 		"pageLoadStrategy": "eager",
 	}
-	wd, err := selenium.NewRemote(caps, "http://localhost:4444/wd/hub/")
+	// docker run -d -p 4444:4444 --name selenium-hub selenium/hub
+	// wait 3 seconds
+	// docker run -d -p 14444:4444 --link selenium-hub:hub selenium/node-phantomjs:latest
+	// docker run -d -p 15555:5555 --link selenium-hub:hub selenium/node-firefox:latest
+	//
+	// use codes below:
+	wd, err := selenium.NewRemote(caps, "http://localhost:15555/wd/hub/")
+	//wd, err := selenium.NewRemote(caps, "http://localhost:15555")
+
+	// docker run -d -p 5900:5900 -p 4444:4444 selenium/standalone-firefox-debug:latest
+	// open vnc://:secret@localhost:5900/
+	//
+	// use codes below:
+	// wd, err := selenium.NewRemote(caps, "http://localhost:4444/wd/hub/")
 	if err != nil {
 		panic(err) // panic is used only as an example and is not otherwise recommended.
 	}
@@ -51,8 +62,6 @@ func main() {
 	}
 
 	wd.Status()
-
-	log.Debug
 
 	searchBox, err := wd.FindElement(selenium.ByID, "search-box")
 	if err != nil {
@@ -136,8 +145,5 @@ func main() {
 	//
 	//fmt.Printf("Got: %s\n", output)
 
-	t2 := time.Now()
-
-	duration := t2.Sub(t1)
-	fmt.Println("duration: ", duration)
+	fmt.Println("duration: ", time.Now().Sub(t1))
 }
