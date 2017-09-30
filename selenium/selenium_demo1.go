@@ -25,7 +25,7 @@ func main() {
 	// docker run -d -p 15555:5555 --link selenium-hub:hub selenium/node-firefox:latest
 	//
 	// use codes below:
-	wd, err := selenium.NewRemote(caps, "http://localhost:15555/wd/hub/")
+	wd, err := selenium.NewRemote(caps, "http://localhost:15551/wd/hub/")
 	//wd, err := selenium.NewRemote(caps, "http://localhost:15555")
 
 	// docker run -d -p 5900:5900 -p 4444:4444 selenium/standalone-firefox-debug:latest
