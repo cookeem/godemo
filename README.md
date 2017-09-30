@@ -238,4 +238,3 @@ kubectl apply -f deploy/kubernetes/godemo.yaml
     mv src vendor
     ```
 
-
