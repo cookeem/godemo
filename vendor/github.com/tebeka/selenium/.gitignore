@@ -1,8 +1,0 @@
-README.html
-_testmain.go
-sauce.json
-t.go
-selenium-server-standalone-*.jar
-chromedriver*
-vendor/*
-!vendor/*.go

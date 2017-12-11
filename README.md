@@ -26,7 +26,7 @@ go get golang.org/x/sys/unix
 
 * 进入程序目录，使用godep save保存相关依赖到Godeps
 ```sh
-cd /Volumes/Share/Go_program/src/cookeem.com
+cd /Volumes/Share/Go_program/src/godemo
 godep save -v ./...
 ```
 
@@ -34,7 +34,7 @@ godep save -v ./...
 
 * 进入程序目录，使用godep restore获取相关依赖
 ```sh
-cd /Volumes/Share/Go_program/src/cookeem.com
+cd /Volumes/Share/Go_program/src/godemo
 godep restore -v
 ```
 
@@ -227,7 +227,7 @@ kubectl apply -f deploy/kubernetes/godemo.yaml
 
     ```sh
     # 运行容器
-    docker run -ti --rm -v "$PWD":/usr/src/cookeem.com -w /usr/src/cookeem.com golang:alpine ash
+    docker run -ti --rm -v "$PWD":/usr/src/godemo -w /usr/src/godemo golang:alpine ash
     
     # 以下命令在container中运行
     mkdir /lib64

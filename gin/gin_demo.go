@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/gin-gonic/gin.v1"
 	"net/http"
 	"time"
+	"github.com/gin-gonic/gin"
 )
 
 // 定义应用版本
