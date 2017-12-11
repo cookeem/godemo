@@ -27,3 +27,5 @@ writeAt.txt
 goquery_demo1
 /client
 /server
+/rpcx/client
+/rpcx/server
