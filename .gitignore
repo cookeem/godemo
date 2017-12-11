@@ -25,3 +25,5 @@ writeAt.txt
 /tmp.txt
 /goquery.log
 goquery_demo1
+/client
+/server
