@@ -41,5 +41,7 @@ func main() {
 		c.String(http.StatusOK, "%s\n App Version is: %s", message, VersionName)
 	})
 
+	router.StaticFS("/assets", http.Dir("."))
+
 	router.Run(":8081")
 }
