@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 	"github.com/gin-gonic/gin"
+	"os"
 )
 
 // 定义应用版本
@@ -13,6 +14,10 @@ import (
 var VersionName = "No Version Provided"
 
 func main() {
+	for _, env := range os.Environ() {
+		fmt.Println(env)
+	}
+
 	fmt.Println("App Version is:", VersionName)
 
 	router := gin.Default()
