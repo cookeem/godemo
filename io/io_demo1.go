@@ -27,11 +27,11 @@ func main() {
 	var err error
 
 	fmt.Println("从标准输入读取数据")
-	data, err = ReadFrom(os.Stdin, 11)
+	data, err = ReadFrom(os.Stdin, 10)
 	fmt.Println(string(data), err)
 
 	fmt.Println("##从普通文件读取数据")
-	file, err := os.Open("cookeem.com.iml")
+	file, err := os.Open("README.md")
 	if err != nil {
 		fmt.Println("##从普通文件读取数据错误：", err)
 		return
@@ -68,7 +68,7 @@ func main() {
 	fmt.Println(n)
 
 	fmt.Println("##读取特定文件，并输出到屏幕")
-	file, err = os.Open("cookeem.com.iml")
+	file, err = os.Open("README.md")
 	if err != nil {
 		panic(err)
 	}
